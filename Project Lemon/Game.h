@@ -4,7 +4,7 @@
 #include <assert.h>
 #include  <vector>
 #include <string>
-
+#include "RenderSystem.h"
 #include "Component.h"
 #include "ComponentManager.h"
 #include "Position.h"
@@ -15,12 +15,14 @@ class Game
 public:
 	Game();
 	~Game();
-private:
-	bool running_ = true;
 
+	static ComponentManager componentManager;
+private:
+	void Game::gameLoop();
+	bool running_ = true;	
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
-	SDL_Texture *tileSheet_;
-	void Game::gameLoop();
+	SDL_Texture *tileSheet_;	
+	RenderSystem renderSystem_;
 };
 

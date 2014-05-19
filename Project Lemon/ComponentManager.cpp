@@ -29,6 +29,17 @@ PositionComponent* ComponentManager::getPositionComponent(int entityID) {
 		return postionComponent;
 	return nullptr;
 }
+
+std::vector<int> ComponentManager::getEntityListOfPositionComponents()
+{
+	std::vector<int> entitiesIdWithComp;
+	for (int i = 0; i < positionComponentsLookupCount_; i++)
+	{
+		if (positionComponentsLookup_[i] >= 0)
+			entitiesIdWithComp.push_back(i);
+	}
+	return entitiesIdWithComp;
+}
 #pragma endregion Position Components
 
 #pragma region
@@ -155,6 +166,6 @@ void ComponentManager::dataDump()
 	std::cout << std::endl << "Components Table" << std::endl;
 	for (int i = 0; i < componentsCount_; i++)
 	{
-		//std::cout << "Component: " << components_[i]->readableName.c_str() << std::endl;
+		std::cout << "Component: " << components_[i]->readableName.c_str() << std::endl;
 	}
 }

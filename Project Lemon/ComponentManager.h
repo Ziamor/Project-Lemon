@@ -5,7 +5,7 @@
 #include "Position.h"
 #include "Texture.h"
 #include "VelocityComponent.h"
-#include <memory>
+
 class ComponentManager
 {
 public:
@@ -14,6 +14,7 @@ public:
 	void ComponentManager::addPositionComponentToEntity(int entityID, PositionComponent &comp);
 	void ComponentManager::addPositionComponent(int entityID, int offset, int x, int y);
 	PositionComponent* ComponentManager::getPositionComponent(int entity);
+	std::vector<int> ComponentManager::getEntityListOfPositionComponents();
 
 	void ComponentManager::addVelocityComponentToEntity(int entityID, VelocityComponent &comp);
 	void ComponentManager::addVelocityComponent(int entityID, int offset, int dx, int dy);

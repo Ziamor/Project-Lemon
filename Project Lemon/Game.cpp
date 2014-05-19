@@ -1,4 +1,5 @@
 #include "Game.h"
+ComponentManager Game::componentManager;
 
 Game::Game()
 {
@@ -30,13 +31,12 @@ Game::~Game()
 }
 
 void Game::gameLoop(){
-	ComponentManager componentManager;
-	componentManager.createNewTileEntity(tileSheet_, 50, 80);
-	componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
-	componentManager.dataDump();
-	//std::cout << componentManager.getPositionComponent(2)->x << std::endl;
-	//std::cout << componentManager.getTextureComponent(2)->tex << std::endl;
-	//std::cout << componentManager.getVelocityComponent(2)->dx << std::endl;
+	Game::componentManager.createNewTileEntity(tileSheet_, 50, 80);
+	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
+	Game::componentManager.dataDump();
+	//std::cout << Game::componentManager.getPositionComponent(2)->x << std::endl;
+	//std::cout << Game::componentManager.getTextureComponent(2)->tex << std::endl;
+	//std::cout << Game::componentManager.getVelocityComponent(2)->dx << std::endl;
 	/*for (int i = 2; i < 10; i++){
 		componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
 		if (componentManager.getPositionComponent(i) == nullptr)
@@ -44,6 +44,7 @@ void Game::gameLoop(){
 		else
 			std::cout << componentManager.getPositionComponent(i)->x;
 	}*/
+	renderSystem_.execute();
 	while (running_)
 	{
 		SDL_Event e;

@@ -1,5 +1,7 @@
 #pragma once
 #include "System.h"
+#include "Game.h"
+
 class RenderSystem :
 	public System
 {
