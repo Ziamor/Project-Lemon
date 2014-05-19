@@ -20,6 +20,18 @@ Game::Game()
 	tileSheet_ = IMG_LoadTexture(renderer_, tileSheetPath.c_str());
 	assert(tileSheet_ != nullptr);
 
+	PositionComponent posComp;
+	Game::componentManager.registerNewComponentType(posComp.readableName);
+
+	TextureComponent texComp;
+	Game::componentManager.registerNewComponentType(texComp.readableName);
+
+	VelocityComponent velComp;
+	Game::componentManager.registerNewComponentType(velComp.readableName);
+
+	TileComponent tileComp;
+	Game::componentManager.registerNewComponentType(tileComp.readableName);
+
 	gameLoop();
 }
 
@@ -31,6 +43,9 @@ Game::~Game()
 }
 
 void Game::gameLoop(){
+	RenderSystem renderSystem_;
+	renderSystem_.setSDL_Renderer(renderer_);
+
 	Game::componentManager.createNewTileEntity(tileSheet_, 50, 80);
 	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
 	Game::componentManager.dataDump();
@@ -44,14 +59,16 @@ void Game::gameLoop(){
 		else
 			std::cout << componentManager.getPositionComponent(i)->x;
 	}*/
-	renderSystem_.execute();
 	while (running_)
-	{
+	{		
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
 			if (e.type == SDL_QUIT)
 				running_ = false;
-		}
+		}			
+		SDL_RenderClear(renderer_);
+		renderSystem_.execute();
+		SDL_RenderPresent(renderer_);
 	}
 }

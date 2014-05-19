@@ -1,6 +1,6 @@
 #include "Component.h"
 
-Component::Component() : readableName("empty")
+Component::Component() : readableName("blank componant")
 {
 }
 

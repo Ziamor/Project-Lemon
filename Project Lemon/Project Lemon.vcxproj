@@ -21,7 +21,8 @@
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="VelocityComponent.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Velocity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\tilesheet.png" />
@@ -34,7 +35,8 @@
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="VelocityComponent.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="Velocity.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ED7522B6-04D9-4300-AABB-64316CA20C68}</ProjectGuid>

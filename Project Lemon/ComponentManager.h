@@ -1,10 +1,12 @@
 #pragma once
 #include <vector>
+#include <map>
 #include "SDL.h"
 #include "Component.h"
 #include "Position.h"
 #include "Texture.h"
-#include "VelocityComponent.h"
+#include "Velocity.h"
+#include "Tile.h"
 
 class ComponentManager
 {
@@ -24,6 +26,7 @@ public:
 	void ComponentManager::addTextureComponent(int entityID, int offset, SDL_Texture *tex);
 	TextureComponent* ComponentManager::getTextureComponent(int entity);
 
+	bool ComponentManager::registerNewComponentType(std::string componantReadableName);
 	void ComponentManager::addComponentToList(int entityID, int offset, Component *component, std::vector<int> &list, int &listCount);
 	int ComponentManager::createNewEntity();
 	void ComponentManager::createNewTileEntity(SDL_Texture *tex, int x, int y);
@@ -38,8 +41,11 @@ private:
 	std::vector<int> entitiesLookup_;
 	int entitiesLookupCount_;
 
-	std::vector<int> positionComponentsLookup_;
-	int positionComponentsLookupCount_;
+	std::map<std::string,std::vector<int>> componantsLookupList_;
+	std::map<std::string, int> componantsLookupListCount_;
+
+	//std::vector<int> positionComponentsLookup_;
+	//int positionComponentsLookupCount_;
 
 	std::vector<int> velocityComponentsLookup_;
 	int velocityComponentsLookupCount_;

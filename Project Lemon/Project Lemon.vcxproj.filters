@@ -36,9 +36,6 @@
     <ClCompile Include="Position.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="RenderSystem.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
@@ -48,7 +45,13 @@
     <ClCompile Include="ComponentManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VelocityComponent.cpp">
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Velocity.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -79,7 +82,10 @@
     <ClInclude Include="ComponentManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VelocityComponent.h">
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Velocity.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

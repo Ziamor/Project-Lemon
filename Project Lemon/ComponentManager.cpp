@@ -1,7 +1,7 @@
 #include "ComponentManager.h"
 
 
-ComponentManager::ComponentManager() :nextEntityID_(1), entitiesLookupCount_(1), componentsCount_(0), positionComponentsLookupCount_(1)
+ComponentManager::ComponentManager() :nextEntityID_(1), entitiesLookupCount_(1), componentsCount_(0)
 {
 }
 
@@ -16,11 +16,13 @@ void ComponentManager::addPositionComponentToEntity(int entityID, PositionCompon
 
 void ComponentManager::addPositionComponent(int entityID, int offset, int x, int y) {
 	PositionComponent *position = new PositionComponent(x, y);
-	addComponentToList(entityID, offset, position, positionComponentsLookup_, positionComponentsLookupCount_);
+	addComponentToList(entityID, offset, position, componantsLookupList_[position->readableName], componantsLookupListCount_[position->readableName]);
 }
 
 PositionComponent* ComponentManager::getPositionComponent(int entityID) {
-	int index = entitiesLookup_[entityID] + positionComponentsLookup_[entityID];
+	int offset = componantsLookupList_["position"][entityID];//<---change this!
+
+	int index = entitiesLookup_[entityID] + offset;
 
 	Component *comp = components_[index];
 	PositionComponent* postionComponent = dynamic_cast<PositionComponent*>(comp);
@@ -33,9 +35,9 @@ PositionComponent* ComponentManager::getPositionComponent(int entityID) {
 std::vector<int> ComponentManager::getEntityListOfPositionComponents()
 {
 	std::vector<int> entitiesIdWithComp;
-	for (int i = 0; i < positionComponentsLookupCount_; i++)
+	for (int i = 0; i < componantsLookupListCount_["position"]; i++)
 	{
-		if (positionComponentsLookup_[i] >= 0)
+		if (componantsLookupList_["position"][i] >= 0)
 			entitiesIdWithComp.push_back(i);
 	}
 	return entitiesIdWithComp;
@@ -64,6 +66,7 @@ VelocityComponent* ComponentManager::getVelocityComponent(int entityID) {
 }
 
 #pragma endregion Velocity Components
+
 #pragma region
 void ComponentManager::addTextureComponentToEntity(int entityID, TextureComponent &comp) {
 }
@@ -85,6 +88,52 @@ TextureComponent* ComponentManager::getTextureComponent(int entityID) {
 }
 #pragma endregion Texture Components
 
+#pragma region
+/*
+void ComponentManager::addTileComponentToEntity(int entityID, PositionComponent &comp) {
+
+}
+
+void ComponentManager::addTileComponent(int entityID, int offset, int x, int y) {
+PositionComponent *position = new PositionComponent(x, y);
+addComponentToList(entityID, offset, position, positionComponentsLookup_, positionComponentsLookupCount_);
+}
+
+PositionComponent* ComponentManager::getTileComponent(int entityID) {
+int index = entitiesLookup_[entityID] + positionComponentsLookup_[entityID];
+
+Component *comp = components_[index];
+PositionComponent* postionComponent = dynamic_cast<PositionComponent*>(comp);
+
+if (postionComponent != nullptr)
+return postionComponent;
+return nullptr;
+}
+
+std::vector<int> ComponentManager::getEntityListOfTileComponents()
+{
+std::vector<int> entitiesIdWithComp;
+for (int i = 0; i < positionComponentsLookupCount_; i++)
+{
+if (positionComponentsLookup_[i] >= 0)
+entitiesIdWithComp.push_back(i);
+}
+return entitiesIdWithComp;
+}*/
+#pragma endregion Tile Components
+
+bool ComponentManager::registerNewComponentType(std::string componantReadableName)
+{
+	if (componantsLookupList_.find(componantReadableName) == componantsLookupList_.end()) {
+		std::vector<int> componentsLookup_;
+		componantsLookupList_[componantReadableName] = componentsLookup_;
+		componantsLookupListCount_[componantReadableName] = 0;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 void ComponentManager::addComponentToList(int entityID, int offset, Component *component, std::vector<int> &list, int &listCount)
 {
 	components_.push_back(component);
@@ -100,6 +149,7 @@ void ComponentManager::addComponentToList(int entityID, int offset, Component *c
 	list[entityID] = offset;
 	listCount++;
 }
+
 int ComponentManager::createNewEntity()
 {
 	int entityID = nextEntityID_++;
@@ -148,8 +198,8 @@ void ComponentManager::dataDump()
 	std::cout << std::endl << "Position Lookup Table" << std::endl;
 	for (int i = 0; i < entitiesLookupCount_; i++)
 	{
-		if (positionComponentsLookup_[i] >= 0)
-			std::cout << "Entity: " << i << " offset: " << positionComponentsLookup_[i] << std::endl;
+		if (componantsLookupList_["position"][i] >= 0)
+			std::cout << "Entity: " << i << " offset: " << componantsLookupList_["position"][i] << std::endl;
 	}
 	std::cout << std::endl << "Texture Lookup Table" << std::endl;
 	for (int i = 0; i < entitiesLookupCount_; i++)

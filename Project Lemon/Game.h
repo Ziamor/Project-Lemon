@@ -23,6 +23,5 @@ private:
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
 	SDL_Texture *tileSheet_;	
-	RenderSystem renderSystem_;
 };
 
