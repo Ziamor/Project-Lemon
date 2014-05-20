@@ -14,12 +14,10 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="main.cpp">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
     </ClCompile>
-    <ClCompile Include="NewComponent.cpp" />
-    <ClCompile Include="newPositionComponent.cpp" />
-    <ClCompile Include="newVelocityComponent.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="System.cpp" />
@@ -34,9 +32,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="NewComponent.h" />
-    <ClInclude Include="newPositionComponent.h" />
-    <ClInclude Include="newVelocityComponent.h" />
+    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="System.h" />

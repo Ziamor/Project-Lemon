@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "SDL.h"
 struct TextureComponent :
-	public Component
+	public Component<TextureComponent>
 {
 public:
 	TextureComponent();

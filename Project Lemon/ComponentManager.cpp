@@ -16,7 +16,7 @@ void ComponentManager::addPositionComponentToEntity(int entityID, PositionCompon
 
 void ComponentManager::addPositionComponent(int entityID, int offset, int x, int y) {
 	PositionComponent *position = new PositionComponent(x, y);
-	addComponentToList(entityID, offset, position, componantsLookupList_[position->readableName], componantsLookupListCount_[position->readableName]);
+	addComponentToList(entityID, offset, position, componantsLookupList_[PositionComponent::componentType], componantsLookupListCount_[PositionComponent::componentType]);
 }
 
 PositionComponent* ComponentManager::getPositionComponent(int entityID) {
@@ -24,11 +24,11 @@ PositionComponent* ComponentManager::getPositionComponent(int entityID) {
 
 	int index = entitiesLookup_[entityID] + offset;
 
-	Component *comp = components_[index];
-	PositionComponent* postionComponent = dynamic_cast<PositionComponent*>(comp);
+	//Component *comp = components_[index];
+	//PositionComponent* postionComponent = dynamic_cast<PositionComponent*>(comp);
 
-	if (postionComponent != nullptr)
-		return postionComponent;
+	//if (postionComponent != nullptr)
+	//	return postionComponent;
 	return nullptr;
 }
 
@@ -51,17 +51,17 @@ void ComponentManager::addVelocityComponentToEntity(int entityID, VelocityCompon
 
 void ComponentManager::addVelocityComponent(int entityID, int offset, int dx, int dy) {
 	VelocityComponent *velocity = new VelocityComponent(dx, dy);
-	addComponentToList(entityID, offset, velocity, velocityComponentsLookup_, velocityComponentsLookupCount_);
+	//addComponentToList(entityID, offset, velocity, velocityComponentsLookup_, velocityComponentsLookupCount_);
 }
 
 VelocityComponent* ComponentManager::getVelocityComponent(int entityID) {
 	int index = entitiesLookup_[entityID] + velocityComponentsLookup_[entityID];
 
-	Component *comp = components_[index];
-	VelocityComponent* velocityComponent = dynamic_cast<VelocityComponent*>(comp);
+	//Component *comp = components_[index];
+	//VelocityComponent* velocityComponent = dynamic_cast<VelocityComponent*>(comp);
 
-	if (velocityComponent != nullptr)
-		return velocityComponent;
+	//if (velocityComponent != nullptr)
+	//	return velocityComponent;
 	return nullptr;
 }
 
@@ -73,17 +73,17 @@ void ComponentManager::addTextureComponentToEntity(int entityID, TextureComponen
 
 void ComponentManager::addTextureComponent(int entityID, int offset, SDL_Texture *tex) {
 	TextureComponent *texture = new TextureComponent(tex);
-	addComponentToList(entityID, offset, texture, textureComponentsLookup_, textureComponentsLookupCount_);
+	//addComponentToList(entityID, offset, texture, textureComponentsLookup_, textureComponentsLookupCount_);
 }
 
 TextureComponent* ComponentManager::getTextureComponent(int entityID) {
 	int index = entitiesLookup_[entityID] + textureComponentsLookup_[entityID];
 
-	Component *comp = components_[index];
-	TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(comp);
+	//Component *comp = components_[index];
+	//TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(comp);
 
-	if (textureComponent != nullptr)
-		return textureComponent;
+	//if (textureComponent != nullptr)
+	//	return textureComponent;
 	return nullptr;
 }
 #pragma endregion Texture Components
@@ -134,7 +134,8 @@ bool ComponentManager::registerNewComponentType(std::string componantReadableNam
 		return false;
 	}
 }
-void ComponentManager::addComponentToList(int entityID, int offset, Component *component, std::vector<int> &list, int &listCount)
+template<class T>
+void ComponentManager::addComponentToList(int entityID, int offset, Component<T> *component, std::vector<int> &list, int &listCount)
 {
 	components_.push_back(component);
 	componentsCount_++;
@@ -186,9 +187,10 @@ void ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y)
 	addTextureComponent(entityID, offset++, tex);
 	addVelocityComponent(entityID, offset++, 0, 0);;
 }
-
+#pragma region
 void ComponentManager::dataDump()
 {
+	/*
 	std::cout << "Entity Lookup Table" << std::endl;
 	for (int i = 0; i < entitiesLookupCount_; i++)
 	{
@@ -217,5 +219,7 @@ void ComponentManager::dataDump()
 	for (int i = 0; i < componentsCount_; i++)
 	{
 		std::cout << "Component: " << components_[i]->readableName.c_str() << std::endl;
-	}
+	}*/
+#pragma endregion Data Dump
 }
+

@@ -1,12 +1,9 @@
 #pragma once
-#include <iostream>
-
-struct Component
+#include <string>
+template <typename T>
+class Component
 {
 public:
-	std::string readableName;
-	Component::Component();
-	Component(std::string name);
-	virtual ~Component();
+	static std::string componentType;
 };
 

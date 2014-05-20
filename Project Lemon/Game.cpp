@@ -20,24 +20,11 @@ Game::Game()
 	tileSheet_ = IMG_LoadTexture(renderer_, tileSheetPath.c_str());
 	assert(tileSheet_ != nullptr);
 
-	PositionComponent posComp;
-	Game::componentManager.registerNewComponentType(posComp.readableName);
-
-	TextureComponent texComp;
-	Game::componentManager.registerNewComponentType(texComp.readableName);
-
-	VelocityComponent velComp;
-	Game::componentManager.registerNewComponentType(velComp.readableName);
-
-	TileComponent tileComp;
-	Game::componentManager.registerNewComponentType(tileComp.readableName);
-
-	NewComponent<newPositionComponent> test;
-	
 	//test
-	std::cout << newPositionComponent::componentType << std::endl;
-	std::cout << newVelocityComponent::componentType << std::endl;
-	std::cout << newPositionComponent::componentType << std::endl;
+	std::cout << PositionComponent::componentType << std::endl;
+	std::cout << TextureComponent::componentType << std::endl;
+	std::cout << VelocityComponent::componentType << std::endl;
+//	std::cout << TileComponent::componentType << std::endl;
 	gameLoop();
 }
 
@@ -51,10 +38,9 @@ Game::~Game()
 void Game::gameLoop(){
 	RenderSystem renderSystem_;
 	renderSystem_.setSDL_Renderer(renderer_);
-
 	Game::componentManager.createNewTileEntity(tileSheet_, 50, 80);
-	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
-	Game::componentManager.dataDump();
+	//Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
+	//Game::componentManager.dataDump();
 	//std::cout << Game::componentManager.getPositionComponent(2)->x << std::endl;
 	//std::cout << Game::componentManager.getTextureComponent(2)->tex << std::endl;
 	//std::cout << Game::componentManager.getVelocityComponent(2)->dx << std::endl;

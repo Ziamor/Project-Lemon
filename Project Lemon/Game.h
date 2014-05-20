@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "SDL_image.h"
+#include <iostream>
 #include <assert.h>
 #include  <vector>
 #include <string>
@@ -10,10 +11,6 @@
 #include "Position.h"
 #include "Texture.h"
 
-//temp!
-#include "newComponent.h"
-#include "newPositionComponent.h"
-#include "newVelocityComponent.h"
 class Game
 {
 public:

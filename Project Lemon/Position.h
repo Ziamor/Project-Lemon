@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 struct PositionComponent :
-	public Component
+	public Component<PositionComponent>
 {
 public:
 	PositionComponent();

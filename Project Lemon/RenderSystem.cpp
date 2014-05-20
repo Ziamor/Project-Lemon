@@ -13,7 +13,7 @@ RenderSystem::~RenderSystem()
 }
 
 bool RenderSystem::execute(){
-	if (renderer_ == nullptr)
+	/*if (renderer_ == nullptr)
 		return false;
 	std::vector<int> list = Game::componentManager.getEntityListOfPositionComponents();
 	for (int i = 0; i < list.size(); i++)
@@ -29,7 +29,7 @@ bool RenderSystem::execute(){
 			destRect.h = textureComp->height;
 			SDL_RenderCopy(renderer_, textureComp->tex, NULL, &destRect);
 		}
-	}
+	}*/
 	return true;
 }
 

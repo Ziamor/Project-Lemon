@@ -27,15 +27,15 @@ public:
 	TextureComponent* ComponentManager::getTextureComponent(int entity);
 
 	bool ComponentManager::registerNewComponentType(std::string componantReadableName);
-	void ComponentManager::addComponentToList(int entityID, int offset, Component *component, std::vector<int> &list, int &listCount);
+	template <typename T>
+	void addComponentToList(int entityID, int offset, Component<T> *component, std::vector<int> &list, int &listCount);
 	int ComponentManager::createNewEntity();
 	void ComponentManager::createNewTileEntity(SDL_Texture *tex, int x, int y);
 	void ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y);
 	void ComponentManager::dataDump();
 private:
 	int nextEntityID_;
-
-	std::vector<Component*> components_;
+	//std::vector<Component*> components_;
 	int componentsCount_;
 
 	std::vector<int> entitiesLookup_;
@@ -53,4 +53,3 @@ private:
 	std::vector<int> textureComponentsLookup_;
 	int textureComponentsLookupCount_;
 };
-
