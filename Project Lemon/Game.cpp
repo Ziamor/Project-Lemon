@@ -32,6 +32,12 @@ Game::Game()
 	TileComponent tileComp;
 	Game::componentManager.registerNewComponentType(tileComp.readableName);
 
+	NewComponent<newPositionComponent> test;
+	
+	//test
+	std::cout << newPositionComponent::componentType << std::endl;
+	std::cout << newVelocityComponent::componentType << std::endl;
+	std::cout << newPositionComponent::componentType << std::endl;
 	gameLoop();
 }
 

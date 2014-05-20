@@ -10,6 +10,10 @@
 #include "Position.h"
 #include "Texture.h"
 
+//temp!
+#include "newComponent.h"
+#include "newPositionComponent.h"
+#include "newVelocityComponent.h"
 class Game
 {
 public:
@@ -19,9 +23,9 @@ public:
 	static ComponentManager componentManager;
 private:
 	void Game::gameLoop();
-	bool running_ = true;	
+	bool running_ = true;
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
-	SDL_Texture *tileSheet_;	
+	SDL_Texture *tileSheet_;
 };
 
