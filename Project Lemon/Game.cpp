@@ -20,11 +20,8 @@ Game::Game()
 	tileSheet_ = IMG_LoadTexture(renderer_, tileSheetPath.c_str());
 	assert(tileSheet_ != nullptr);
 
-	//test
-	std::cout << PositionComponent::componentType << std::endl;
-	std::cout << TextureComponent::componentType << std::endl;
-	std::cout << VelocityComponent::componentType << std::endl;
-//	std::cout << TileComponent::componentType << std::endl;
+	PositionComponent posComp;
+	//componentManager.registerNewComponentType(posComp.readableName);
 	gameLoop();
 }
 
@@ -39,18 +36,9 @@ void Game::gameLoop(){
 	RenderSystem renderSystem_;
 	renderSystem_.setSDL_Renderer(renderer_);
 	Game::componentManager.createNewTileEntity(tileSheet_, 50, 80);
-	//Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
-	//Game::componentManager.dataDump();
-	//std::cout << Game::componentManager.getPositionComponent(2)->x << std::endl;
-	//std::cout << Game::componentManager.getTextureComponent(2)->tex << std::endl;
-	//std::cout << Game::componentManager.getVelocityComponent(2)->dx << std::endl;
-	/*for (int i = 2; i < 10; i++){
-		componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
-		if (componentManager.getPositionComponent(i) == nullptr)
-			std::cout << "Not a valid pointer";
-		else
-			std::cout << componentManager.getPositionComponent(i)->x;
-	}*/
+	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
+	Game::componentManager.dataDump();
+	
 	while (running_)
 	{		
 		SDL_Event e;

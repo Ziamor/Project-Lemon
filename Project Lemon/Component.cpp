@@ -1,3 +1,15 @@
 #include "Component.h"
-template <typename T> std::string Component<T>::componentType = "Blank";
+Component::Component() : readableName("blank componant")
+{
+}
+
+Component::Component(std::string name) : readableName(name)
+{
+}
+
+
+Component::~Component()
+{
+	std::cout << "dcon";
+}
 

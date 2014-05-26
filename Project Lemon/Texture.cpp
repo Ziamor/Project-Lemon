@@ -1,10 +1,9 @@
 #include "Texture.h"
-
-TextureComponent::TextureComponent()
+TextureComponent::TextureComponent() : Component("texture")
 {
 }
 
-TextureComponent::TextureComponent(SDL_Texture *tex) : tex(tex)
+TextureComponent::TextureComponent(SDL_Texture *tex) : tex(tex), Component("texture")
 {
 	SDL_QueryTexture(tex, NULL, NULL, &width, &height);
 }
@@ -13,5 +12,3 @@ TextureComponent::TextureComponent(SDL_Texture *tex) : tex(tex)
 TextureComponent::~TextureComponent()
 {
 }
-
-std::string Component<TextureComponent>::componentType = "Texture";

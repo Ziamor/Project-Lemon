@@ -13,43 +13,46 @@ class ComponentManager
 public:
 	ComponentManager();
 	~ComponentManager();
-	void ComponentManager::addPositionComponentToEntity(int entityID, PositionComponent &comp);
+
 	void ComponentManager::addPositionComponent(int entityID, int offset, int x, int y);
 	PositionComponent* ComponentManager::getPositionComponent(int entity);
-	std::vector<int> ComponentManager::getEntityListOfPositionComponents();
 
-	void ComponentManager::addVelocityComponentToEntity(int entityID, VelocityComponent &comp);
 	void ComponentManager::addVelocityComponent(int entityID, int offset, int dx, int dy);
 	VelocityComponent* ComponentManager::getVelocityComponent(int entity);
 
-	void ComponentManager::addTextureComponentToEntity(int entityID, TextureComponent &comp);
 	void ComponentManager::addTextureComponent(int entityID, int offset, SDL_Texture *tex);
 	TextureComponent* ComponentManager::getTextureComponent(int entity);
 
-	bool ComponentManager::registerNewComponentType(std::string componantReadableName);
-	template <typename T>
-	void addComponentToList(int entityID, int offset, Component<T> *component, std::vector<int> &list, int &listCount);
+	void ComponentManager::addTileComponent(int entityID, int offset);
+	TileComponent* ComponentManager::getTileComponent(int entity);
+
+	Component* ComponentManager::getComponent(int entity, std::string readableName);
+
+	std::vector<int> ComponentManager::getEntityListOfComponents(std::string componentType);
+	void addComponentToList(int entityID, int offset, Component *component);
 	int ComponentManager::createNewEntity();
+
 	void ComponentManager::createNewTileEntity(SDL_Texture *tex, int x, int y);
 	void ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y);
+
 	void ComponentManager::dataDump();
 private:
 	int nextEntityID_;
-	//std::vector<Component*> components_;
+	std::vector<Component*> components_;
 	int componentsCount_;
 
 	std::vector<int> entitiesLookup_;
 	int entitiesLookupCount_;
 
-	std::map<std::string,std::vector<int>> componantsLookupList_;
+	std::map<std::string, std::vector<int>> componantsLookupList_;
 	std::map<std::string, int> componantsLookupListCount_;
 
-	//std::vector<int> positionComponentsLookup_;
-	//int positionComponentsLookupCount_;
+	/*std::vector<int> positionComponentsLookup_;
+	int positionComponentsLookupCount_;
 
 	std::vector<int> velocityComponentsLookup_;
 	int velocityComponentsLookupCount_;
 
 	std::vector<int> textureComponentsLookup_;
-	int textureComponentsLookupCount_;
+	int textureComponentsLookupCount_;*/
 };

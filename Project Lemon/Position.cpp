@@ -1,11 +1,10 @@
 #include "Position.h"
-
-PositionComponent::PositionComponent() : x(-1), y(-1)
+PositionComponent::PositionComponent() : x(-1), y(-1), Component("position")
 {
 
 }
 
-PositionComponent::PositionComponent(int x, int y) : x(x), y(y)
+PositionComponent::PositionComponent(int x, int y) : x(x), y(y), Component("position")
 {
 
 }
@@ -14,5 +13,3 @@ PositionComponent::PositionComponent(int x, int y) : x(x), y(y)
 PositionComponent::~PositionComponent()
 {
 }
-
-std::string Component<PositionComponent>::componentType = "Position";

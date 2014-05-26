@@ -1,9 +1,11 @@
 #pragma once
-#include <string>
-template <typename T>
-class Component
+#include <iostream>
+struct Component
 {
 public:
-	static std::string componentType;
+	std::string readableName;
+	Component::Component();
+	Component(std::string name);
+	virtual ~Component();
 };
 

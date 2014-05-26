@@ -1,6 +1,7 @@
 #include "RenderSystem.h"
 #include "Position.h"
 #include "Texture.h"
+#include "Tile.h"
 
 RenderSystem::RenderSystem()
 {
@@ -13,9 +14,10 @@ RenderSystem::~RenderSystem()
 }
 
 bool RenderSystem::execute(){
-	/*if (renderer_ == nullptr)
+	if (renderer_ == nullptr)
 		return false;
-	std::vector<int> list = Game::componentManager.getEntityListOfPositionComponents();
+	PositionComponent postionComp;
+	std::vector<int> list = Game::componentManager.getEntityListOfComponents(postionComp.readableName);
 	for (int i = 0; i < list.size(); i++)
 	{
 		PositionComponent *positionComp = Game::componentManager.getPositionComponent(list[i]);
@@ -27,9 +29,18 @@ bool RenderSystem::execute(){
 			destRect.y = positionComp->y;
 			destRect.w = textureComp->width;
 			destRect.h = textureComp->height;
-			SDL_RenderCopy(renderer_, textureComp->tex, NULL, &destRect);
+			TileComponent *tileComp = Game::componentManager.getTileComponent(list[i]);
+			if (tileComp != nullptr)
+			{
+				SDL_Rect srcRect = tileComp->srcrect;
+				destRect.w = tileComp->tileSize;
+				destRect.h = tileComp->tileSize;
+				SDL_RenderCopy(renderer_, textureComp->tex, &srcRect, &destRect);
+			}
+			else
+				SDL_RenderCopy(renderer_, textureComp->tex, NULL, &destRect);
 		}
-	}*/
+	}
 	return true;
 }
 
