@@ -6,6 +6,7 @@
 #include  <vector>
 #include <string>
 #include "RenderSystem.h"
+#include "MapSystem.h"
 #include "Component.h"
 #include "ComponentManager.h"
 #include "Position.h"
@@ -18,11 +19,15 @@ public:
 	~Game();
 
 	static ComponentManager componentManager;
+	static const int SCREEN_WIDTH;
+	static const int SCREEN_HEIGHT;
 private:
 	void Game::gameLoop();
 	bool running_ = true;
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
 	SDL_Texture *tileSheet_;
+
+	TextureManager textureManager;
 };
 

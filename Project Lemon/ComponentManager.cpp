@@ -77,8 +77,8 @@ TextureComponent* ComponentManager::getTextureComponent(int entityID) {
 
 #pragma region
 
-void ComponentManager::addTileComponent(int entityID, int offset) {
-	TileComponent *tile = new TileComponent(GRASS, 16);
+void ComponentManager::addTileComponent(int entityID, int offset, TileID tileID) {
+	TileComponent *tile = new TileComponent(tileID, 16);
 	addComponentToList(entityID, offset, tile);
 }
 
@@ -142,14 +142,14 @@ int ComponentManager::createNewEntity()
 	return entityID;
 }
 
-void ComponentManager::createNewTileEntity(SDL_Texture *tex, int x, int y)
+void ComponentManager::createNewTileEntity(TileID tileID, int x, int y)
 {
 	int entityID = createNewEntity();
 	int offset = 0;
-
+	SDL_Texture *tex = textureManager.GetTexture("tilesheet");
 	addPositionComponent(entityID, offset++, x, y);
 	addTextureComponent(entityID, offset++, tex);
-	addTileComponent(entityID, offset++);
+	addTileComponent(entityID, offset++, tileID);
 }
 
 void ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y)
@@ -160,6 +160,12 @@ void ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y)
 	addPositionComponent(entityID, offset++, x, y);
 	addTextureComponent(entityID, offset++, tex);
 	addVelocityComponent(entityID, offset++, 0, 0);;
+}
+
+void ComponentManager::addTexture(SDL_Texture *tex, std::string name)
+{
+	if (tex != nullptr)
+		textures[name] = tex;
 }
 #pragma region
 void ComponentManager::dataDump()

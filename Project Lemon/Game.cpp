@@ -1,11 +1,9 @@
 #include "Game.h"
 ComponentManager Game::componentManager;
-
+const int Game::SCREEN_WIDTH = 640;
+const int Game::SCREEN_HEIGHT = 480;
 Game::Game()
 {
-	const int SCREEN_WIDTH = 640;
-	const int SCREEN_HEIGHT = 480;
-
 	assert(SDL_Init(SDL_INIT_EVERYTHING) == 0);
 
 	window_ = SDL_CreateWindow("Project Lemon", 100, 100, SCREEN_WIDTH,
@@ -20,8 +18,8 @@ Game::Game()
 	tileSheet_ = IMG_LoadTexture(renderer_, tileSheetPath.c_str());
 	assert(tileSheet_ != nullptr);
 
-	PositionComponent posComp;
-	//componentManager.registerNewComponentType(posComp.readableName);
+	textureManager.AddTexture("tilesheet", tileSheet_);
+
 	gameLoop();
 }
 
@@ -35,9 +33,12 @@ Game::~Game()
 void Game::gameLoop(){
 	RenderSystem renderSystem_;
 	renderSystem_.setSDL_Renderer(renderer_);
-	Game::componentManager.createNewTileEntity(tileSheet_, 50, 80);
-	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
-	Game::componentManager.dataDump();
+
+	MapSystem mapSystem;
+
+//	Game::componentManager.createNewTileEntity(tileSheet_, 50, 80);
+//	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
+//	Game::componentManager.dataDump();
 	
 	while (running_)
 	{		

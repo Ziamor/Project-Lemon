@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include "SDL.h"
+#include "TextureManager.h"
 #include "Component.h"
 #include "Position.h"
 #include "Texture.h"
@@ -23,7 +24,7 @@ public:
 	void ComponentManager::addTextureComponent(int entityID, int offset, SDL_Texture *tex);
 	TextureComponent* ComponentManager::getTextureComponent(int entity);
 
-	void ComponentManager::addTileComponent(int entityID, int offset);
+	void ComponentManager::addTileComponent(int entityID, int offset, TileID tileID);
 	TileComponent* ComponentManager::getTileComponent(int entity);
 
 	Component* ComponentManager::getComponent(int entity, std::string readableName);
@@ -32,11 +33,14 @@ public:
 	void addComponentToList(int entityID, int offset, Component *component);
 	int ComponentManager::createNewEntity();
 
-	void ComponentManager::createNewTileEntity(SDL_Texture *tex, int x, int y);
+	void ComponentManager::createNewTileEntity(TileID tileID, int x, int y);
 	void ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y);
+
+	void ComponentManager::addTexture(SDL_Texture *tex, std::string name);
 
 	void ComponentManager::dataDump();
 private:
+	TextureManager textureManager;
 	int nextEntityID_;
 	std::vector<Component*> components_;
 	int componentsCount_;
@@ -47,12 +51,5 @@ private:
 	std::map<std::string, std::vector<int>> componantsLookupList_;
 	std::map<std::string, int> componantsLookupListCount_;
 
-	/*std::vector<int> positionComponentsLookup_;
-	int positionComponentsLookupCount_;
-
-	std::vector<int> velocityComponentsLookup_;
-	int velocityComponentsLookupCount_;
-
-	std::vector<int> textureComponentsLookup_;
-	int textureComponentsLookupCount_;*/
+	std::map<std::string, SDL_Texture*> textures;
 };
