@@ -1,6 +1,10 @@
 #pragma once
 #include "System.h"
 #include "Game.h"
+#include "Position.h"
+#include "Texture.h"
+#include "Tile.h"
+#include "Component.h"
 
 class RenderSystem :
 	public System

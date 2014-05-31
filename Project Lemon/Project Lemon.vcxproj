@@ -19,6 +19,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
     </ClCompile>
     <ClCompile Include="MapSystem.cpp" />
+    <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="System.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="MapSystem.h" />
+    <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="System.h" />

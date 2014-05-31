@@ -1,7 +1,4 @@
 #include "RenderSystem.h"
-#include "Position.h"
-#include "Texture.h"
-#include "Tile.h"
 
 RenderSystem::RenderSystem()
 {
@@ -16,8 +13,7 @@ RenderSystem::~RenderSystem()
 bool RenderSystem::execute(){
 	if (renderer_ == nullptr)
 		return false;
-	PositionComponent postionComp;
-	std::vector<int> list = Game::componentManager.getEntityListOfComponents(postionComp.readableName);
+	std::vector<int> list = Game::componentManager.getEntityListOfComponents(Component::getNameFromEnum(Component::POSITION));
 	for (int i = 0; i < list.size(); i++)
 	{
 		PositionComponent *positionComp = Game::componentManager.getPositionComponent(list[i]);
@@ -39,7 +35,7 @@ bool RenderSystem::execute(){
 			}
 			else
 				SDL_RenderCopy(renderer_, textureComp->tex, NULL, &destRect);
-		}
+		}	
 	}
 	return true;
 }

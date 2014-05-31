@@ -1,6 +1,5 @@
 #include "ComponentManager.h"
 
-
 ComponentManager::ComponentManager() :nextEntityID_(1), entitiesLookupCount_(1), componentsCount_(0)
 {
 }
@@ -18,7 +17,7 @@ void ComponentManager::addPositionComponent(int entityID, int offset, int x, int
 
 PositionComponent* ComponentManager::getPositionComponent(int entityID) {
 	PositionComponent* postionComponent;
-	Component *comp = getComponent(entityID, "position");
+	Component *comp = getComponent(entityID, Component::getNameFromEnum(Component::POSITION));
 	postionComponent = dynamic_cast<PositionComponent*>(comp);
 
 	if (postionComponent != nullptr)
@@ -29,7 +28,7 @@ PositionComponent* ComponentManager::getPositionComponent(int entityID) {
 std::vector<int> ComponentManager::getEntityListOfComponents(std::string readableName)
 {
 	std::vector<int> entitiesIdWithComp;
-	for (int i = 0; i < componantsLookupListCount_[readableName]; i++)
+	for (int i = 0; i <= componantsLookupListCount_[readableName]; i++)
 	{
 		if (componantsLookupList_[readableName][i] >= 0)
 			entitiesIdWithComp.push_back(i);
@@ -47,7 +46,7 @@ void ComponentManager::addVelocityComponent(int entityID, int offset, int dx, in
 
 VelocityComponent* ComponentManager::getVelocityComponent(int entityID) {
 	VelocityComponent* velocityComponent;
-	Component *comp = getComponent(entityID, "velocity");
+	Component *comp = getComponent(entityID, Component::getNameFromEnum(Component::VELOCITY));
 	velocityComponent = dynamic_cast<VelocityComponent*>(comp);
 
 	if (velocityComponent != nullptr)
@@ -66,7 +65,7 @@ void ComponentManager::addTextureComponent(int entityID, int offset, SDL_Texture
 
 TextureComponent* ComponentManager::getTextureComponent(int entityID) {
 	TextureComponent* texComp;
-	Component *comp = getComponent(entityID, "texture");
+	Component *comp = getComponent(entityID, Component::getNameFromEnum(Component::TEXTURE));
 	texComp = dynamic_cast<TextureComponent*>(comp);
 
 	if (texComp != nullptr)
@@ -77,14 +76,14 @@ TextureComponent* ComponentManager::getTextureComponent(int entityID) {
 
 #pragma region
 
-void ComponentManager::addTileComponent(int entityID, int offset, TileID tileID) {
+void ComponentManager::addTileComponent(int entityID, int offset, TileComponent::TileID tileID) {
 	TileComponent *tile = new TileComponent(tileID, 16);
 	addComponentToList(entityID, offset, tile);
 }
 
 TileComponent* ComponentManager::getTileComponent(int entityID) {
 	TileComponent* tileComp;
-	Component *comp = getComponent(entityID, "tile");
+	Component *comp = getComponent(entityID, Component::getNameFromEnum(Component::TILE));
 	tileComp = dynamic_cast<TileComponent*>(comp);
 
 	if (tileComp != nullptr)
@@ -142,7 +141,7 @@ int ComponentManager::createNewEntity()
 	return entityID;
 }
 
-void ComponentManager::createNewTileEntity(TileID tileID, int x, int y)
+void ComponentManager::createNewTileEntity(TileComponent::TileID tileID, int x, int y)
 {
 	int entityID = createNewEntity();
 	int offset = 0;

@@ -9,6 +9,8 @@
 #include "Velocity.h"
 #include "Tile.h"
 
+
+
 class ComponentManager
 {
 public:
@@ -24,7 +26,7 @@ public:
 	void ComponentManager::addTextureComponent(int entityID, int offset, SDL_Texture *tex);
 	TextureComponent* ComponentManager::getTextureComponent(int entity);
 
-	void ComponentManager::addTileComponent(int entityID, int offset, TileID tileID);
+	void ComponentManager::addTileComponent(int entityID, int offset, TileComponent::TileID tileID);
 	TileComponent* ComponentManager::getTileComponent(int entity);
 
 	Component* ComponentManager::getComponent(int entity, std::string readableName);
@@ -33,7 +35,7 @@ public:
 	void addComponentToList(int entityID, int offset, Component *component);
 	int ComponentManager::createNewEntity();
 
-	void ComponentManager::createNewTileEntity(TileID tileID, int x, int y);
+	void ComponentManager::createNewTileEntity(TileComponent::TileID tileID, int x, int y);
 	void ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y);
 
 	void ComponentManager::addTexture(SDL_Texture *tex, std::string name);

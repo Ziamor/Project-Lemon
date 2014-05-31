@@ -36,20 +36,34 @@ void Game::gameLoop(){
 
 	MapSystem mapSystem;
 
-//	Game::componentManager.createNewTileEntity(tileSheet_, 50, 80);
-//	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
-//	Game::componentManager.dataDump();
-	
+	//	Game::componentManager.createNewTileEntity(tileSheet_, 50, 80);
+	//	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
+	//	Game::componentManager.dataDump();
+	/////////////////////////
+	PerlinNoise perlinNoise = PerlinNoise(SCREEN_WIDTH, SCREEN_HEIGHT, 25418, 0.75, 6);
+	std::vector<double> noiseData = perlinNoise.getVecterPerlinNoise();
+	///////////////////////////////////////
+	int screensize = noiseData.size();
 	while (running_)
-	{		
+	{
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
 			if (e.type == SDL_QUIT)
 				running_ = false;
-		}			
+		}
 		SDL_RenderClear(renderer_);
 		renderSystem_.execute();
+		////////////////////////////////////
+		for (int i = 0; i < screensize; i++){
+			int x = i % SCREEN_WIDTH;
+			int y = i / SCREEN_WIDTH;
+			int color = noiseData[i] * 127 + 127;
+
+			SDL_SetRenderDrawColor(renderer_, color, color, color, 255);
+			SDL_RenderDrawPoint(renderer_, x, y);
+		}
+		//////////////////////////////////
 		SDL_RenderPresent(renderer_);
 	}
 }

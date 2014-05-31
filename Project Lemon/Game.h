@@ -11,6 +11,7 @@
 #include "ComponentManager.h"
 #include "Position.h"
 #include "Texture.h"
+#include "PerlinNoise.h"
 
 class Game
 {
