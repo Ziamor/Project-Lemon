@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
+    <ClCompile Include="ElevationComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="main.cpp">
@@ -21,6 +22,7 @@
     <ClCompile Include="MapSystem.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Position.cpp" />
+    <ClCompile Include="Region.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -34,11 +36,13 @@
   <ItemGroup>
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="ElevationComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="MapSystem.h" />
     <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="Region.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Texture.h" />

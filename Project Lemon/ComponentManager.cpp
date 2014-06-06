@@ -10,9 +10,9 @@ ComponentManager::~ComponentManager()
 }
 #pragma region
 
-void ComponentManager::addPositionComponent(int entityID, int offset, int x, int y) {
+void ComponentManager::addPositionComponent(int entityID, int x, int y) {
 	PositionComponent *position = new PositionComponent(x, y);
-	addComponentToList(entityID, offset, position);
+	addComponentToList(entityID, position);
 }
 
 PositionComponent* ComponentManager::getPositionComponent(int entityID) {
@@ -28,6 +28,8 @@ PositionComponent* ComponentManager::getPositionComponent(int entityID) {
 std::vector<int> ComponentManager::getEntityListOfComponents(std::string readableName)
 {
 	std::vector<int> entitiesIdWithComp;
+	if (componantsLookupListCount_.find(readableName) == componantsLookupListCount_.end())
+		return entitiesIdWithComp;
 	for (int i = 0; i <= componantsLookupListCount_[readableName]; i++)
 	{
 		if (componantsLookupList_[readableName][i] >= 0)
@@ -39,9 +41,9 @@ std::vector<int> ComponentManager::getEntityListOfComponents(std::string readabl
 
 #pragma region
 
-void ComponentManager::addVelocityComponent(int entityID, int offset, int dx, int dy) {
+void ComponentManager::addVelocityComponent(int entityID, int dx, int dy) {
 	VelocityComponent *velocity = new VelocityComponent(dx, dy);
-	addComponentToList(entityID, offset, velocity);
+	addComponentToList(entityID, velocity);
 }
 
 VelocityComponent* ComponentManager::getVelocityComponent(int entityID) {
@@ -58,9 +60,9 @@ VelocityComponent* ComponentManager::getVelocityComponent(int entityID) {
 
 #pragma region
 
-void ComponentManager::addTextureComponent(int entityID, int offset, SDL_Texture *tex) {
+void ComponentManager::addTextureComponent(int entityID, SDL_Texture *tex) {
 	TextureComponent *texture = new TextureComponent(tex);
-	addComponentToList(entityID, offset, texture);
+	addComponentToList(entityID, texture);
 }
 
 TextureComponent* ComponentManager::getTextureComponent(int entityID) {
@@ -76,9 +78,9 @@ TextureComponent* ComponentManager::getTextureComponent(int entityID) {
 
 #pragma region
 
-void ComponentManager::addTileComponent(int entityID, int offset, TileComponent::TileID tileID) {
+void ComponentManager::addTileComponent(int entityID, TileComponent::TileID tileID) {
 	TileComponent *tile = new TileComponent(tileID, 16);
-	addComponentToList(entityID, offset, tile);
+	addComponentToList(entityID, tile);
 }
 
 TileComponent* ComponentManager::getTileComponent(int entityID) {
@@ -92,8 +94,31 @@ TileComponent* ComponentManager::getTileComponent(int entityID) {
 }
 #pragma endregion Texture Components
 
+#pragma region
+
+void ComponentManager::addElevationComponent(int entityID, double elevation) {
+	ElevationComponent *elevationComp = new ElevationComponent(elevation);
+	addComponentToList(entityID, elevationComp);
+}
+
+ElevationComponent* ComponentManager::getElevationComponent(int entityID) {
+	ElevationComponent* elevationComp;
+	Component *comp = getComponent(entityID, Component::getNameFromEnum(Component::ELEVATION));
+	elevationComp = dynamic_cast<ElevationComponent*>(comp);
+
+	if (elevationComp != nullptr)
+		return elevationComp;
+	return nullptr;
+}
+#pragma endregion Texture Components
+
 Component* ComponentManager::getComponent(int entityID, std::string readableName)
 {
+	//get the index of the component in the componats list by getting the entities start index
+	//and adding the offset value stored in the related list of the component type.
+	//Eg. We are looking for a position component which is stored in index 32. entitiesLookup_ 
+	//gives 24 so the components start at index 24 of the components list. componantsLookupList_ 
+	//gives us 8 so its offset by 8. 24 + 8 = 32 which is the correct index.
 	int index = entitiesLookup_[entityID] + componantsLookupList_[readableName][entityID];
 
 	Component *comp = components_[index];
@@ -103,14 +128,16 @@ Component* ComponentManager::getComponent(int entityID, std::string readableName
 	return nullptr;
 }
 
-void ComponentManager::addComponentToList(int entityID, int offset, Component *component)
+void ComponentManager::addComponentToList(int entityID, Component *component)
 {
 	std::string componantReadableName = component->readableName;
 	std::vector<int> *list = &componantsLookupList_[componantReadableName];
 	int *listCount = &componantsLookupListCount_[componantReadableName];
 
+	int offset = 0;
 	components_.push_back(component);
-	componentsCount_++;
+	offset = componentsCount_++;
+	offset -= entitiesLookup_[entityID];
 
 	if (list->size() <= entityID)
 	{
@@ -119,6 +146,7 @@ void ComponentManager::addComponentToList(int entityID, int offset, Component *c
 		for (int i = oldEndIndex; i < oldEndIndex + 100; i++)
 			(*list)[i] = -1;
 	}
+
 	(*list)[entityID] = offset;
 	(*listCount)++;
 }
@@ -141,24 +169,25 @@ int ComponentManager::createNewEntity()
 	return entityID;
 }
 
-void ComponentManager::createNewTileEntity(TileComponent::TileID tileID, int x, int y)
+int ComponentManager::createNewTileEntity(TileComponent::TileID tileID, int x, int y, double elevation)
 {
 	int entityID = createNewEntity();
-	int offset = 0;
 	SDL_Texture *tex = textureManager.GetTexture("tilesheet");
-	addPositionComponent(entityID, offset++, x, y);
-	addTextureComponent(entityID, offset++, tex);
-	addTileComponent(entityID, offset++, tileID);
+	addPositionComponent(entityID, x, y);
+	addTextureComponent(entityID, tex);
+	addTileComponent(entityID, tileID);
+	addElevationComponent(entityID, elevation);
+	return entityID;
 }
 
-void ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y)
+int ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y)
 {
 	int entityID = createNewEntity();
-	int offset = 0;
 
-	addPositionComponent(entityID, offset++, x, y);
-	addTextureComponent(entityID, offset++, tex);
-	addVelocityComponent(entityID, offset++, 0, 0);;
+	addPositionComponent(entityID, x, y);
+	addTextureComponent(entityID, tex);
+	addVelocityComponent(entityID, 0, 0);;
+	return entityID;
 }
 
 void ComponentManager::addTexture(SDL_Texture *tex, std::string name)

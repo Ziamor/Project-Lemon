@@ -8,7 +8,8 @@ public:
 		POSITION,
 		TEXTURE,
 		VELOCITY,
-		TILE
+		TILE,
+		ELEVATION
 	};
 	std::string readableName;
 	Component::Component();

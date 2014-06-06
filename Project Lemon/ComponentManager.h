@@ -8,8 +8,7 @@
 #include "Texture.h"
 #include "Velocity.h"
 #include "Tile.h"
-
-
+#include "ElevationComponent.h"
 
 class ComponentManager
 {
@@ -17,26 +16,29 @@ public:
 	ComponentManager();
 	~ComponentManager();
 
-	void ComponentManager::addPositionComponent(int entityID, int offset, int x, int y);
+	void ComponentManager::addPositionComponent(int entityID, int x, int y);
 	PositionComponent* ComponentManager::getPositionComponent(int entity);
 
-	void ComponentManager::addVelocityComponent(int entityID, int offset, int dx, int dy);
+	void ComponentManager::addVelocityComponent(int entityID, int dx, int dy);
 	VelocityComponent* ComponentManager::getVelocityComponent(int entity);
 
-	void ComponentManager::addTextureComponent(int entityID, int offset, SDL_Texture *tex);
+	void ComponentManager::addTextureComponent(int entityID, SDL_Texture *tex);
 	TextureComponent* ComponentManager::getTextureComponent(int entity);
 
-	void ComponentManager::addTileComponent(int entityID, int offset, TileComponent::TileID tileID);
+	void ComponentManager::addTileComponent(int entityID, TileComponent::TileID tileID);
 	TileComponent* ComponentManager::getTileComponent(int entity);
+
+	void ComponentManager::addElevationComponent(int entityID, double elevation);
+	ElevationComponent* ComponentManager::getElevationComponent(int entity);
 
 	Component* ComponentManager::getComponent(int entity, std::string readableName);
 
 	std::vector<int> ComponentManager::getEntityListOfComponents(std::string componentType);
-	void addComponentToList(int entityID, int offset, Component *component);
+	void addComponentToList(int entityID, Component *component);
 	int ComponentManager::createNewEntity();
 
-	void ComponentManager::createNewTileEntity(TileComponent::TileID tileID, int x, int y);
-	void ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y);
+	int ComponentManager::createNewTileEntity(TileComponent::TileID tileID, int x, int y, double elevation);
+	int ComponentManager::createNewPlayerEntity(SDL_Texture *tex, int x, int y);
 
 	void ComponentManager::addTexture(SDL_Texture *tex, std::string name);
 

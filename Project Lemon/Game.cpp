@@ -40,10 +40,14 @@ void Game::gameLoop(){
 	//	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
 	//	Game::componentManager.dataDump();
 	/////////////////////////
-	PerlinNoise perlinNoise = PerlinNoise(SCREEN_WIDTH, SCREEN_HEIGHT, 25418, 0.75, 6);
-	std::vector<double> noiseData = perlinNoise.getVecterPerlinNoise();
+	int width = 640;
+	int height = 480;
+	PerlinNoise perlinNoise = PerlinNoise(width, height, 25418, 0.75, 3);
+	//std::vector<double> noiseData = perlinNoise.getVecterPerlinNoise();
+	int screensize = width*height;
+	SDL_Surface *surface = SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);
 	///////////////////////////////////////
-	int screensize = noiseData.size();
+
 	while (running_)
 	{
 		SDL_Event e;
@@ -55,14 +59,25 @@ void Game::gameLoop(){
 		SDL_RenderClear(renderer_);
 		renderSystem_.execute();
 		////////////////////////////////////
+		/*
 		for (int i = 0; i < screensize; i++){
-			int x = i % SCREEN_WIDTH;
-			int y = i / SCREEN_WIDTH;
-			int color = noiseData[i] * 127 + 127;
+			int x = i % width;
+			int y = i / width;
+			int color = perlinNoise.getPerlinNoise(x,y,75) * 127 + 127;
 
 			SDL_SetRenderDrawColor(renderer_, color, color, color, 255);
 			SDL_RenderDrawPoint(renderer_, x, y);
+			///*SDL_Rect testRect;
+			testRect.x = x * 16;
+			testRect.y = y * 16;
+			testRect.w = 16;
+			testRect.h = 16;
+			SDL_FillRect(surface, &testRect, color);
+			SDL_Texture *tex =  SDL_CreateTextureFromSurface(renderer_, surface);
+
+			SDL_RenderCopy(renderer_, tex, NULL, NULL);
 		}
+		*/
 		//////////////////////////////////
 		SDL_RenderPresent(renderer_);
 	}
