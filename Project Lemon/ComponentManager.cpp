@@ -25,18 +25,6 @@ PositionComponent* ComponentManager::getPositionComponent(int entityID) {
 	return nullptr;
 }
 
-std::vector<int> ComponentManager::getEntityListOfComponents(std::string readableName)
-{
-	std::vector<int> entitiesIdWithComp;
-	if (componantsLookupListCount_.find(readableName) == componantsLookupListCount_.end())
-		return entitiesIdWithComp;
-	for (int i = 0; i <= componantsLookupListCount_[readableName]; i++)
-	{
-		if (componantsLookupList_[readableName][i] >= 0)
-			entitiesIdWithComp.push_back(i);
-	}
-	return entitiesIdWithComp;
-}
 #pragma endregion Position Components
 
 #pragma region
@@ -92,7 +80,7 @@ TileComponent* ComponentManager::getTileComponent(int entityID) {
 		return tileComp;
 	return nullptr;
 }
-#pragma endregion Texture Components
+#pragma endregion Tile Components
 
 #pragma region
 
@@ -110,7 +98,23 @@ ElevationComponent* ComponentManager::getElevationComponent(int entityID) {
 		return elevationComp;
 	return nullptr;
 }
-#pragma endregion Texture Components
+#pragma endregion Elevation Components
+//Resturns a list of entity IDs that contain the component type
+std::vector<int> ComponentManager::getEntityListOfComponents(std::string readableName)
+{
+	std::vector<int> entitiesIdWithComp;
+	//Check if the list for that component type exists. If not that means no components of that type exist yet
+	//so return an empty list.
+	if (componantsLookupListCount_.find(readableName) == componantsLookupListCount_.end())
+		return entitiesIdWithComp;
+	//Loop through all entities. If the entity has a valid value(not -1) then add the id to the list
+	for (int i = 0; i <= componantsLookupListCount_[readableName]; i++)
+	{
+		if (componantsLookupList_[readableName][i] >= 0)
+			entitiesIdWithComp.push_back(i);
+	}
+	return entitiesIdWithComp;
+}
 
 Component* ComponentManager::getComponent(int entityID, std::string readableName)
 {
@@ -130,15 +134,18 @@ Component* ComponentManager::getComponent(int entityID, std::string readableName
 
 void ComponentManager::addComponentToList(int entityID, Component *component)
 {
+	//Get the components types readable name to identify which list to us.
 	std::string componantReadableName = component->readableName;
 	std::vector<int> *list = &componantsLookupList_[componantReadableName];
 	int *listCount = &componantsLookupListCount_[componantReadableName];
 
+	//calculate the offset by getting the total component count and subtracting
+	//the start index of the entity from entitiesLookup_
 	int offset = 0;
 	components_.push_back(component);
 	offset = componentsCount_++;
 	offset -= entitiesLookup_[entityID];
-
+	//If the list is too smal to contain the entity index, we expand it and set the value to -1
 	if (list->size() <= entityID)
 	{
 		int oldEndIndex = list->size();
@@ -146,16 +153,17 @@ void ComponentManager::addComponentToList(int entityID, Component *component)
 		for (int i = oldEndIndex; i < oldEndIndex + 100; i++)
 			(*list)[i] = -1;
 	}
-
+	//set the correct coresponding component list to equal the offset
 	(*list)[entityID] = offset;
 	(*listCount)++;
 }
 
 int ComponentManager::createNewEntity()
 {
+	//Get the nex entity ID
 	int entityID = nextEntityID_++;
 	int startIndex = componentsCount_;
-
+	//If the list is too smal to contain the entity index, we expand it and set the value to -1
 	if (entitiesLookup_.size() <= entityID)
 	{
 		int oldEndIndex = entitiesLookup_.size();
