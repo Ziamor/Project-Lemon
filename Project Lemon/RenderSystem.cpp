@@ -45,6 +45,10 @@ bool RenderSystem::execute(){
 	return true;
 }
 
+void RenderSystem::onNotify(const int entityID, System::event_type event)
+{
+	
+}
 void RenderSystem::setSDL_Renderer(SDL_Renderer *ren)
 {
 	renderer_ = ren;

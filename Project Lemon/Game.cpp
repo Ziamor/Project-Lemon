@@ -2,6 +2,7 @@
 ComponentManager Game::componentManager;
 const int Game::SCREEN_WIDTH = 640;
 const int Game::SCREEN_HEIGHT = 480;
+
 Game::Game()
 {
 	assert(SDL_Init(SDL_INIT_EVERYTHING) == 0);
@@ -33,52 +34,37 @@ Game::~Game()
 void Game::gameLoop(){
 	RenderSystem renderSystem_;
 	renderSystem_.setSDL_Renderer(renderer_);
-
 	MapSystem mapSystem;
 
-	//	Game::componentManager.createNewTileEntity(tileSheet_, 50, 80);
-	//	Game::componentManager.createNewPlayerEntity(tileSheet_, 50, 80);
-	//	Game::componentManager.dataDump();
-	/////////////////////////
-	int width = 640;
-	int height = 480;
-	PerlinNoise perlinNoise = PerlinNoise(width, height, 25418, 0.75, 3);
-	//std::vector<double> noiseData = perlinNoise.getVecterPerlinNoise();
-	int screensize = width*height;
-	SDL_Surface *surface = SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);
-	///////////////////////////////////////
-
+	gameSubject.addObserver(&renderSystem_);
+	gameSubject.addObserver(&mapSystem);
 	while (running_)
 	{
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
-			if (e.type == SDL_QUIT)
-				running_ = false;
+			switch (e.type) {
+			case SDL_QUIT:
+				break;
+			case SDL_KEYUP:
+				break;
+			case SDL_KEYDOWN:
+				if (e.key.keysym.scancode == SDL_SCANCODE_UP)
+					gameSubject.notify(-1, System::event_type::KEY_UP);
+				else if (e.key.keysym.scancode == SDL_SCANCODE_DOWN)
+					gameSubject.notify(-1, System::event_type::KEY_DOWN);
+				else if (e.key.keysym.scancode == SDL_SCANCODE_LEFT)
+					gameSubject.notify(-1, System::event_type::KEY_LEFT);
+				else if (e.key.keysym.scancode == SDL_SCANCODE_RIGHT)
+					gameSubject.notify(-1, System::event_type::KEY_RIGHT);
+				break;
+			default:
+				break;
+			}
+
 		}
 		SDL_RenderClear(renderer_);
 		renderSystem_.execute();
-		////////////////////////////////////
-		/*
-		for (int i = 0; i < screensize; i++){
-			int x = i % width;
-			int y = i / width;
-			int color = perlinNoise.getPerlinNoise(x,y,75) * 127 + 127;
-
-			SDL_SetRenderDrawColor(renderer_, color, color, color, 255);
-			SDL_RenderDrawPoint(renderer_, x, y);
-			///*SDL_Rect testRect;
-			testRect.x = x * 16;
-			testRect.y = y * 16;
-			testRect.w = 16;
-			testRect.h = 16;
-			SDL_FillRect(surface, &testRect, color);
-			SDL_Texture *tex =  SDL_CreateTextureFromSurface(renderer_, surface);
-
-			SDL_RenderCopy(renderer_, tex, NULL, NULL);
-		}
-		*/
-		//////////////////////////////////
 		SDL_RenderPresent(renderer_);
 	}
 }

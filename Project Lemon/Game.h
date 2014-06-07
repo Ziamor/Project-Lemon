@@ -12,6 +12,7 @@
 #include "Position.h"
 #include "Texture.h"
 #include "PerlinNoise.h"
+#include "Subject.h"
 
 class Game
 {
@@ -25,6 +26,7 @@ public:
 private:
 	void Game::gameLoop();
 	bool running_ = true;
+	Subject gameSubject;
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
 	SDL_Texture *tileSheet_;

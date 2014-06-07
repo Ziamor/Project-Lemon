@@ -35,13 +35,12 @@ void Region::remove_entity_from_region(int entityID){
 }
 
 bool Region::region_contains_entity(int entityID){
-	for (int i = 0; i < entitiesInRegion.size(); i++){
+	for (int i = 0; i < entitiesInRegion.size(); i++)
 		{
 			if (entitiesInRegion[i] = entityID)
 			return true;
 		}
 		return false;
-	}
 }
 bool Region::is_inside_region(int x, int y)
 {

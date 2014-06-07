@@ -1,6 +1,6 @@
 #include "ComponentManager.h"
 
-ComponentManager::ComponentManager() :nextEntityID_(1), entitiesLookupCount_(1), componentsCount_(0)
+ComponentManager::ComponentManager() :nextEntityID_(1), componentsCount_(0)
 {
 }
 
@@ -105,10 +105,10 @@ std::vector<int> ComponentManager::getEntityListOfComponents(std::string readabl
 	std::vector<int> entitiesIdWithComp;
 	//Check if the list for that component type exists. If not that means no components of that type exist yet
 	//so return an empty list.
-	if (componantsLookupListCount_.find(readableName) == componantsLookupListCount_.end())
+	if (componantsLookupList_.find(readableName) == componantsLookupList_.end())
 		return entitiesIdWithComp;
 	//Loop through all entities. If the entity has a valid value(not -1) then add the id to the list
-	for (int i = 0; i <= componantsLookupListCount_[readableName]; i++)
+	for (int i = 0; i < componantsLookupList_[readableName].size(); i++)
 	{
 		if (componantsLookupList_[readableName][i] >= 0)
 			entitiesIdWithComp.push_back(i);
@@ -137,7 +137,6 @@ void ComponentManager::addComponentToList(int entityID, Component *component)
 	//Get the components types readable name to identify which list to us.
 	std::string componantReadableName = component->readableName;
 	std::vector<int> *list = &componantsLookupList_[componantReadableName];
-	int *listCount = &componantsLookupListCount_[componantReadableName];
 
 	//calculate the offset by getting the total component count and subtracting
 	//the start index of the entity from entitiesLookup_
@@ -155,7 +154,6 @@ void ComponentManager::addComponentToList(int entityID, Component *component)
 	}
 	//set the correct coresponding component list to equal the offset
 	(*list)[entityID] = offset;
-	(*listCount)++;
 }
 
 int ComponentManager::createNewEntity()
@@ -172,7 +170,6 @@ int ComponentManager::createNewEntity()
 			entitiesLookup_[i] = -1;
 	}
 	entitiesLookup_[entityID] = startIndex;
-	entitiesLookupCount_++;
 
 	return entityID;
 }
@@ -208,7 +205,7 @@ void ComponentManager::dataDump()
 {
 
 	std::cout << "Entity Lookup Table" << std::endl;
-	for (int i = 0; i < entitiesLookupCount_; i++)
+	for (int i = 0; i < entitiesLookup_.size(); i++)
 	{
 		if (entitiesLookup_[i] >= 0)
 			std::cout << "Entity: " << i << " start index: " << entitiesLookup_[i] << std::endl;
@@ -218,7 +215,7 @@ void ComponentManager::dataDump()
 	for (it_type iterator = componantsLookupList_.begin(); iterator != componantsLookupList_.end(); iterator++) {
 		std::string key = iterator->first;
 		std::vector<int> lookupTable = iterator->second;
-		int lookupTableCount = componantsLookupListCount_[key];
+		int lookupTableCount = componantsLookupList_[key].size();
 
 		std::cout << key.c_str() << " Lookup Table" << std::endl;
 		for (int i = 1; i <= lookupTableCount; i++)

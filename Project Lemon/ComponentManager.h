@@ -50,10 +50,8 @@ private:
 	int componentsCount_;
 
 	std::vector<int> entitiesLookup_;
-	int entitiesLookupCount_;
 
 	std::map<std::string, std::vector<int>> componantsLookupList_;
-	std::map<std::string, int> componantsLookupListCount_;
 
 	std::map<std::string, SDL_Texture*> textures;
 };
