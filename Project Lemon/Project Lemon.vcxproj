@@ -13,9 +13,8 @@
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
-    <ClCompile Include="ElevationComponent.cpp" />
+    <ClCompile Include="Elevation.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="main.cpp">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
     </ClCompile>
@@ -36,9 +35,8 @@
   <ItemGroup>
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
-    <ClInclude Include="ElevationComponent.h" />
+    <ClInclude Include="Elevation.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PerlinNoise.h" />

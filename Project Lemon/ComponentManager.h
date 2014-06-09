@@ -9,7 +9,7 @@
 #include "Texture.h"
 #include "Velocity.h"
 #include "Tile.h"
-#include "ElevationComponent.h"
+#include "Elevation.h"
 
 class ComponentManager
 {
