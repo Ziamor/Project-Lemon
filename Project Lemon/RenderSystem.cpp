@@ -13,8 +13,8 @@ RenderSystem::~RenderSystem()
 bool RenderSystem::execute(){
 	if (renderer_ == nullptr)
 		return false;
-	std::vector<int> list = Game::componentManager.getEntityListOfComponents(Component::getNameFromEnum(Component::POSITION));
-	for (int i = 0; i < list.size(); i++)
+	std::vector<int> list = Game::componentManager.getEntityListOfComponents(Component::getNameFromEnum(Component::TEXTURE));
+	for (size_t i = 0; i < list.size(); i++)
 	{
 		int entityID = list[i];
 		PositionComponent *positionComp = Game::componentManager.getPositionComponent(entityID);
@@ -22,8 +22,8 @@ bool RenderSystem::execute(){
 		if (positionComp != nullptr && textureComp != nullptr)
 		{
 			SDL_Rect destRect;
-			destRect.x = positionComp->x;
-			destRect.y = positionComp->y;
+			destRect.x = positionComp->x + MapManager::get_view_x() * 16;
+			destRect.y = positionComp->y + MapManager::get_view_y() * 16;
 			destRect.w = textureComp->width;
 			destRect.h = textureComp->height;
 			TileComponent *tileComp = Game::componentManager.getTileComponent(entityID);
@@ -34,7 +34,7 @@ bool RenderSystem::execute(){
 				destRect.h = tileComp->tileSize;
 				SDL_Texture *tex = *(&textureComp->tex);
 				SDL_Texture* auxtexture = SDL_CreateTexture(renderer_, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 500, 500);
-				int color = Game::componentManager.getElevationComponent(entityID)->elevation * 128 + 128;
+				int color = int(Game::componentManager.getElevationComponent(entityID)->elevation * 128 + 128);
 				SDL_SetTextureColorMod(tex, color, color, color);
 				SDL_RenderCopy(renderer_, tex, &srcRect, &destRect);
 			}
@@ -45,7 +45,7 @@ bool RenderSystem::execute(){
 	return true;
 }
 
-void RenderSystem::onNotify(const int entityID, System::event_type event)
+void RenderSystem::onNotify(const int entityID, Observer::event_type event)
 {
 	
 }

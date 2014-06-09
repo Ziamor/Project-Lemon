@@ -1,16 +1,11 @@
 #pragma once
-class System
+#include "Observer.h"
+class System :
+	public Observer
 {
 public:
-	enum event_type
-	{
-		KEY_UP,
-		KEY_DOWN,
-		KEY_LEFT,
-		KEY_RIGHT
-	};
-	virtual ~System();
+	System(){} // Added definition in header file so we dont have too many pesky .cpp files
+	virtual ~System(){}
 	virtual bool execute() = 0;
-	virtual void onNotify(const int entityID, event_type event) = 0;
 };
 

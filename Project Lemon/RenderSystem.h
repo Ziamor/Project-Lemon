@@ -14,7 +14,7 @@ public:
 	~RenderSystem();
 	bool RenderSystem::execute();
 	void RenderSystem::setSDL_Renderer(SDL_Renderer *ren);
-	void RenderSystem::onNotify(const int entityID, System::event_type event);
+	void RenderSystem::onNotify(const int entityID, Observer::event_type event);
 private:
 	SDL_Renderer *renderer_;
 };

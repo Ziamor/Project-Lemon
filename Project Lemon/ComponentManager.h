@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include "SDL.h"
+#include "Region.h"
 #include "TextureManager.h"
 #include "Component.h"
 #include "Position.h"
@@ -42,7 +43,6 @@ public:
 
 	void ComponentManager::addTexture(SDL_Texture *tex, std::string name);
 
-	void ComponentManager::dataDump();
 private:
 	TextureManager textureManager;
 	int nextEntityID_;
@@ -54,4 +54,5 @@ private:
 	std::map<std::string, std::vector<int>> componantsLookupList_;
 
 	std::map<std::string, SDL_Texture*> textures;
+	std::map<std::string, Region*> regions;
 };

@@ -99,7 +99,7 @@ ElevationComponent* ComponentManager::getElevationComponent(int entityID) {
 	return nullptr;
 }
 #pragma endregion Elevation Components
-//Resturns a list of entity IDs that contain the component type
+//Returns a list of entity IDs that contain the component type
 std::vector<int> ComponentManager::getEntityListOfComponents(std::string readableName)
 {
 	std::vector<int> entitiesIdWithComp;
@@ -108,7 +108,7 @@ std::vector<int> ComponentManager::getEntityListOfComponents(std::string readabl
 	if (componantsLookupList_.find(readableName) == componantsLookupList_.end())
 		return entitiesIdWithComp;
 	//Loop through all entities. If the entity has a valid value(not -1) then add the id to the list
-	for (int i = 0; i < componantsLookupList_[readableName].size(); i++)
+	for (size_t i = 0; i < componantsLookupList_[readableName].size(); i++)
 	{
 		if (componantsLookupList_[readableName][i] >= 0)
 			entitiesIdWithComp.push_back(i);
@@ -142,10 +142,11 @@ void ComponentManager::addComponentToList(int entityID, Component *component)
 	//the start index of the entity from entitiesLookup_
 	int offset = 0;
 	components_.push_back(component);
-	offset = componentsCount_++;
+	offset = componentsCount_++;//TODO remove the counter
 	offset -= entitiesLookup_[entityID];
+	int size = list->size();
 	//If the list is too smal to contain the entity index, we expand it and set the value to -1
-	if (list->size() <= entityID)
+	if (size <= entityID)
 	{
 		int oldEndIndex = list->size();
 		list->resize(list->size() + 100);
@@ -161,8 +162,9 @@ int ComponentManager::createNewEntity()
 	//Get the nex entity ID
 	int entityID = nextEntityID_++;
 	int startIndex = componentsCount_;
+	int size = entitiesLookup_.size();
 	//If the list is too smal to contain the entity index, we expand it and set the value to -1
-	if (entitiesLookup_.size() <= entityID)
+	if (size <= entityID)
 	{
 		int oldEndIndex = entitiesLookup_.size();
 		entitiesLookup_.resize(entitiesLookup_.size() + 100);
@@ -199,35 +201,5 @@ void ComponentManager::addTexture(SDL_Texture *tex, std::string name)
 {
 	if (tex != nullptr)
 		textures[name] = tex;
-}
-#pragma region
-void ComponentManager::dataDump()
-{
-
-	std::cout << "Entity Lookup Table" << std::endl;
-	for (int i = 0; i < entitiesLookup_.size(); i++)
-	{
-		if (entitiesLookup_[i] >= 0)
-			std::cout << "Entity: " << i << " start index: " << entitiesLookup_[i] << std::endl;
-	}
-	std::cout << std::endl;
-	typedef std::map<std::string, std::vector<int>>::iterator it_type;
-	for (it_type iterator = componantsLookupList_.begin(); iterator != componantsLookupList_.end(); iterator++) {
-		std::string key = iterator->first;
-		std::vector<int> lookupTable = iterator->second;
-		int lookupTableCount = componantsLookupList_[key].size();
-
-		std::cout << key.c_str() << " Lookup Table" << std::endl;
-		for (int i = 1; i <= lookupTableCount; i++)
-		if (lookupTable[i] >= 0)
-			std::cout << "Entity: " << i << " offset: " << lookupTable[i] << std::endl;
-		std::cout << std::endl;
-	}
-	std::cout << std::endl << "Components Table" << std::endl;
-	for (int i = 0; i < componentsCount_; i++)
-	{
-		std::cout << "Component: " << components_[i]->readableName.c_str() << std::endl;
-	}
-#pragma endregion Data Dump
 }
 

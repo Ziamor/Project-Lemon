@@ -6,7 +6,7 @@
 #include  <vector>
 #include <string>
 #include "RenderSystem.h"
-#include "MapSystem.h"
+#include "MapManager.h"
 #include "Component.h"
 #include "ComponentManager.h"
 #include "Position.h"

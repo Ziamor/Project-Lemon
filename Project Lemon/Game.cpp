@@ -32,12 +32,12 @@ Game::~Game()
 }
 
 void Game::gameLoop(){
-	RenderSystem renderSystem_;
-	renderSystem_.setSDL_Renderer(renderer_);
-	MapSystem mapSystem;
+	RenderSystem render_system_;
+	render_system_.setSDL_Renderer(renderer_);
+	MapManager map_manager;
 
-	gameSubject.addObserver(&renderSystem_);
-	gameSubject.addObserver(&mapSystem);
+	gameSubject.addObserver(&render_system_);
+	gameSubject.addObserver(&map_manager);
 	while (running_)
 	{
 		SDL_Event e;
@@ -45,6 +45,7 @@ void Game::gameLoop(){
 		{
 			switch (e.type) {
 			case SDL_QUIT:
+				running_ = false;
 				break;
 			case SDL_KEYUP:
 				break;
@@ -64,7 +65,7 @@ void Game::gameLoop(){
 
 		}
 		SDL_RenderClear(renderer_);
-		renderSystem_.execute();
+		render_system_.execute();
 		SDL_RenderPresent(renderer_);
 	}
 }

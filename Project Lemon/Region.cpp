@@ -16,7 +16,7 @@ Region::~Region()
 }
 
 void Region::add_entity_to_region(int entityID){
-	for (int i = 0; i < entitiesInRegion.size(); i++)
+	for (size_t i = 0; i < entitiesInRegion.size(); i++)
 	{
 		if (entitiesInRegion[i] = -1)
 		{
@@ -28,14 +28,14 @@ void Region::add_entity_to_region(int entityID){
 }
 
 void Region::remove_entity_from_region(int entityID){
-	for (int i = 0; i < entitiesInRegion.size(); i++){
+	for (size_t i = 0; i < entitiesInRegion.size(); i++){
 		if (entitiesInRegion[i] = entityID)
 			entitiesInRegion[i] = -1;
 	}
 }
 
 bool Region::region_contains_entity(int entityID){
-	for (int i = 0; i < entitiesInRegion.size(); i++)
+	for (size_t i = 0; i < entitiesInRegion.size(); i++)
 		{
 			if (entitiesInRegion[i] = entityID)
 			return true;
