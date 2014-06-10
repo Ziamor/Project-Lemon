@@ -1,5 +1,6 @@
 #include "Game.h"
 ComponentManager Game::componentManager;
+
 const int Game::SCREEN_WIDTH = 640;
 const int Game::SCREEN_HEIGHT = 480;
 
@@ -35,9 +36,12 @@ void Game::gameLoop(){
 	RenderSystem render_system_;
 	render_system_.setSDL_Renderer(renderer_);
 	MapManager map_manager;
-
 	gameSubject.addObserver(&render_system_);
 	gameSubject.addObserver(&map_manager);
+	Region region;
+	//componentManager.createNewPlayerEntity(tileSheet_, 20, 40, region);
+	//componentManager.createNewTileEntity(TileComponent::GRASS, 50, 50, 0.5, region);
+	region.dataDump();
 	while (running_)
 	{
 		SDL_Event e;
