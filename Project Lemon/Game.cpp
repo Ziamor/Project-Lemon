@@ -33,17 +33,42 @@ Game::~Game()
 }
 
 void Game::gameLoop(){
-	RenderSystem render_system_;
-	render_system_.setSDL_Renderer(renderer_);
+	RenderSystem render_system;
+	render_system.setSDL_Renderer(renderer_);
 	MapManager map_manager;
-	gameSubject.addObserver(&render_system_);
+
+	/////////
+	clock_t tStart = clock();
+	clock_t tEnd = clock();
+	std::ofstream myfile;
+	myfile.open("output.txt");
+	////////////////////////////////////
+	/*std::ofstream myfile;
+	myfile.open("output.txt");
+	clock_t tStart = clock();
+	clock_t tEnd = clock();
+	for (int i = 0; i < 100; i++){
+	tStart = clock();
+	MapManager map_manager(i);
+	render_system.execute();
+	tEnd = clock();
+	myfile << (double)(tEnd - tStart) / CLOCKS_PER_SEC << std::endl;
+	//printf("Time taken: %.2fs\n", (double)(tStart) / CLOCKS_PER_SEC);
+	}
+	myfile.close();
+	////////////////////////////////////
+	*/
+	gameSubject.addObserver(&render_system);
 	gameSubject.addObserver(&map_manager);
-	Region region;
+
+	//Region region;
 	//componentManager.createNewPlayerEntity(tileSheet_, 20, 40, region);
 	//componentManager.createNewTileEntity(TileComponent::GRASS, 50, 50, 0.5, region);
-	region.dataDump();
+	//region.dataDump();
 	while (running_)
 	{
+		clock_t tStart = clock();
+		//printf("Time taken: %.2fs\n", (double)(tStart) / CLOCKS_PER_SEC);
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
@@ -69,7 +94,14 @@ void Game::gameLoop(){
 
 		}
 		SDL_RenderClear(renderer_);
-		render_system_.execute();
+
+		tStart = clock();
+		render_system.execute();
+		tEnd = clock();
+		myfile << (double)(tEnd - tStart) / CLOCKS_PER_SEC << std::endl;
 		SDL_RenderPresent(renderer_);
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(tStart + 17 - clock()));
 	}
+	myfile.close();
 }

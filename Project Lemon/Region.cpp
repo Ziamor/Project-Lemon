@@ -123,14 +123,17 @@ int Region::get_component_index(int entityID, std::string readableName)
 std::vector<int> Region::getEntityListOfComponents(std::string readableName)
 {
 	std::vector<int> entitiesIdWithComp;
+	std::vector<int> *list;
 	//Check if the list for that component type exists. If not that means no components of that type exist yet
 	//so return an empty list.
 	if (componantsLookupList_.find(readableName) == componantsLookupList_.end())
 		return entitiesIdWithComp;
+	else
+		list = &componantsLookupList_[readableName];
 	//Loop through all entities. If the entity has a valid value(not -1) then add the id to the list
-	for (size_t i = 0; i < componantsLookupList_[readableName].size(); i++)
+	for (size_t i = 0; i < list->size(); i++)
 	{
-		if (componantsLookupList_[readableName][i] >= 0)
+		if ((*list)[i] >= 0)
 		{
 			int entityID = entitiesIDLookup_[i];
 			entitiesIdWithComp.push_back(entityID);

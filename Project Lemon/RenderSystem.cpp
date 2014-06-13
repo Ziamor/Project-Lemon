@@ -28,8 +28,8 @@ bool RenderSystem::execute(){
 			if (positionComp != nullptr && textureComp != nullptr)
 			{
 				SDL_Rect destRect;
-				destRect.x = positionComp->x + MapManager::get_view_x() * 16;
-				destRect.y = positionComp->y + MapManager::get_view_y() * 16;
+				destRect.x = positionComp->x + MapManager::get_view_x() * -16;
+				destRect.y = positionComp->y + MapManager::get_view_y() * -16;
 				destRect.w = textureComp->width;
 				destRect.h = textureComp->height;
 				TileComponent *tileComp = Game::componentManager.getTileComponent(entityID, *region);

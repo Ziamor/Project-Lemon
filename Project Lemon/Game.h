@@ -13,6 +13,10 @@
 #include "Texture.h"
 #include "PerlinNoise.h"
 #include "Subject.h"
+#include <time.h>
+#include <chrono>
+#include <thread>
+#include <fstream>
 
 class Game
 {
@@ -30,7 +34,7 @@ private:
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
 	SDL_Texture *tileSheet_;
-
+	
 	TextureManager textureManager;
 };
 
