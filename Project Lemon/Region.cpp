@@ -68,6 +68,7 @@ bool Region::region_contains_entity(int entityID){
 	}
 	return false;
 }
+
 bool Region::is_inside_region(int x, int y)
 {
 	if (x >= region_x && x <= region_x + regionSize)
@@ -89,6 +90,9 @@ int Region::get_y(){
 	return region_y;
 }
 
+//Returns the index for getting component data
+//eg. Entity ID is 425 but inside the region all component data for ID 435 is stored
+//inside all component arrays at index = 7
 int Region::get_entity_index(int entityID)
 {
 	int entityIndex = -1;

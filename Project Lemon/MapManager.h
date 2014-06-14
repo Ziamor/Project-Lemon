@@ -19,7 +19,7 @@ public:
 	static int MapManager::get_view_y();
 	Region* MapManager::get_region(int x_world, int y_world);
 	Region* MapManager::get_region_with_world_cord(int x_world, int y_world);
-	int MapManager::world_cord_to_region_cord(double n);
+	int MapManager::world_coord_to_region_coord(double n);
 	static std::vector<Region*> MapManager::get_active_regions();
 	static std::vector<Region*> active_regions;
 private:

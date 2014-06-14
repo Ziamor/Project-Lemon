@@ -10,7 +10,7 @@ TextureManager::TextureManager()
 TextureManager::~TextureManager()
 {
 }
-
+//Cache a texture
 void TextureManager::AddTexture(std::string name, SDL_Texture *tex){
 	if (tex != nullptr && textures.count(name) == 0)
 		textures[name] = tex;

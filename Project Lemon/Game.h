@@ -3,7 +3,7 @@
 #include "SDL_image.h"
 #include <iostream>
 #include <assert.h>
-#include  <vector>
+#include <vector>
 #include <string>
 #include "RenderSystem.h"
 #include "MapManager.h"
@@ -34,7 +34,7 @@ private:
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
 	SDL_Texture *tileSheet_;
-	
+
 	TextureManager textureManager;
 };
 

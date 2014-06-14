@@ -1,6 +1,7 @@
 #include "Component.h"
 
 const std::string Component::EnumStrings[] = { "position", "texture", "velocity", "tile", "elevation" };
+//Returns a string from the enum type
 std::string Component::getNameFromEnum(int enumVal)
 {
 	return EnumStrings[enumVal];

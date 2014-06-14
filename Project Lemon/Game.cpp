@@ -22,7 +22,7 @@ Game::Game()
 
 	textureManager.AddTexture("tilesheet", tileSheet_);
 
-	gameLoop();
+	gameLoop(); // Start the game loop
 }
 
 Game::~Game()
@@ -33,42 +33,20 @@ Game::~Game()
 }
 
 void Game::gameLoop(){
-	RenderSystem render_system;
-	render_system.setSDL_Renderer(renderer_);
+	clock_t tStart = clock();
+
+	// Set up the systems/managers
 	MapManager map_manager;
+	RenderSystem render_system;
 
-	/////////
-	clock_t tStart = clock();
-	clock_t tEnd = clock();
-	std::ofstream myfile;
-	myfile.open("output.txt");
-	////////////////////////////////////
-	/*std::ofstream myfile;
-	myfile.open("output.txt");
-	clock_t tStart = clock();
-	clock_t tEnd = clock();
-	for (int i = 0; i < 100; i++){
-	tStart = clock();
-	MapManager map_manager(i);
-	render_system.execute();
-	tEnd = clock();
-	myfile << (double)(tEnd - tStart) / CLOCKS_PER_SEC << std::endl;
-	//printf("Time taken: %.2fs\n", (double)(tStart) / CLOCKS_PER_SEC);
-	}
-	myfile.close();
-	////////////////////////////////////
-	*/
-	gameSubject.addObserver(&render_system);
-	gameSubject.addObserver(&map_manager);
+	render_system.setSDL_Renderer(renderer_); // Give the render system access to the sdl renderer
+	gameSubject.addObserver(&render_system); // Register the render system to listen to Game
+	gameSubject.addObserver(&map_manager); // Register the map manager to listen to Game
 
-	//Region region;
-	//componentManager.createNewPlayerEntity(tileSheet_, 20, 40, region);
-	//componentManager.createNewTileEntity(TileComponent::GRASS, 50, 50, 0.5, region);
-	//region.dataDump();
+	//Loop begins
 	while (running_)
 	{
-		clock_t tStart = clock();
-		//printf("Time taken: %.2fs\n", (double)(tStart) / CLOCKS_PER_SEC);
+		tStart = clock();
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
@@ -79,6 +57,7 @@ void Game::gameLoop(){
 			case SDL_KEYUP:
 				break;
 			case SDL_KEYDOWN:
+				// Notify any observer that is listening for keyboard events
 				if (e.key.keysym.scancode == SDL_SCANCODE_UP)
 					gameSubject.notify(-1, System::event_type::KEY_UP);
 				else if (e.key.keysym.scancode == SDL_SCANCODE_DOWN)
@@ -94,14 +73,9 @@ void Game::gameLoop(){
 
 		}
 		SDL_RenderClear(renderer_);
-
-		tStart = clock();
-		render_system.execute();
-		tEnd = clock();
-		myfile << (double)(tEnd - tStart) / CLOCKS_PER_SEC << std::endl;
+		render_system.execute(); //execute the render system
 		SDL_RenderPresent(renderer_);
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(tStart + 17 - clock()));
+		std::this_thread::sleep_for(std::chrono::milliseconds(tStart + 17 - clock())); //Sleep so that each frame is ~17 milliseconds long
 	}
-	myfile.close();
 }
